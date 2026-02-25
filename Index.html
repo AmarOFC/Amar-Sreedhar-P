@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>knoYOsta - Cosmic Oracle</title>
+    
+    <link rel="stylesheet" href="style.css">
+    
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@700&family=Outfit:wght@300;400;500&display=swap" rel="stylesheet">
+</head>
+<body>
+
+    <div id="universe">
+        <div class="nebula nebula-pink"></div>
+        <div class="nebula nebula-mint"></div>
+    </div>
+
+    <div id="auth-modal" class="modal-overlay">
+        <div class="modal-content">
+            <h2 class="modal-title">Enter the Ether</h2>
+            <p class="modal-subtitle">Provide your birth details to align the stars.</p>
+            
+            <input type="email" id="reg-email" placeholder="Your Spirit's Email" required>
+            <input type="password" id="reg-password" placeholder="Create a Secret Mantra (Password)" required>
+            
+            <label for="reg-dob" style="align-self: flex-start; margin-left: 10px; font-size: 0.85rem; color: rgba(255,255,255,0.6);">Date of Birth</label>
+            <input type="date" id="reg-dob" required>
+            
+            <button class="auth-btn" onclick="registerUser()">Align My Stars</button>
+            <p id="auth-message" class="auth-msg"></p>
+        </div>
+    </div>
+
+    <div class="chat-container">
+        <div class="header">
+            <h1 class="title">knoYOsta</h1>
+        </div>
+        
+        <div class="messages" id="chat-box"></div>
+
+        <div class="input-area">
+            <input type="text" id="user-input" placeholder="What sacred insight does your soul seek today?" autocomplete="off">
+            <button class="send-btn" onclick="sendMessage()">
+                <svg viewBox="0 0 24 24">
+                    <path d="M2.01 21L23 12 2.01 3 2 10l15 2-15 2z"/>
+                </svg>
+            </button>
+        </div>
+    </div>
+
+    <div class="creator-credit">
+        Crafted by <span class="amar-name">AMAR</span>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
