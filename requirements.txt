@@ -4,3 +4,4 @@ pymongo
 bcrypt
 google-genai
 python-dotenv
+gunicorn
