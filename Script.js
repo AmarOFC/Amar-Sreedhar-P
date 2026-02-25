@@ -14,6 +14,9 @@ for (let i = 0; i < 100; i++) {
 }
 
 // 2. Logic Variables & UI Selectors
+// UPDATE THIS URL TO YOUR LIVE RENDER URL
+const API_BASE_URL = "https://amar-sreedhar-p.onrender.com"; 
+
 let currentSessionId = "session_" + Math.random().toString(36).substr(2, 9);
 const modal = document.getElementById("auth-modal");
 const chatContainer = document.querySelector(".chat-container");
@@ -29,7 +32,7 @@ inputField.addEventListener("keypress", function (event) {
   }
 });
 
-// 3. Registration Logic (Connecting to Flask /register)
+// 3. Registration Logic (Connecting to Render /register)
 async function registerUser() {
   const email = document.getElementById("reg-email").value;
   const password = document.getElementById("reg-password").value;
@@ -44,8 +47,8 @@ async function registerUser() {
   authMessage.innerText = "Consulting the ephemeris...";
 
   try {
-    // Using 127.0.0.1 to avoid local DNS/CORS issues
-    const response = await fetch("http://127.0.0.1:5000/register", {
+    // UPDATED: Now points to Render instead of 127.0.0.1
+    const response = await fetch(`${API_BASE_URL}/register`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
@@ -58,13 +61,11 @@ async function registerUser() {
     const data = await response.json();
 
     if (response.ok) {
-      // Success: Hide modal and reveal chat
       modal.style.opacity = "0";
       setTimeout(() => {
         modal.style.display = "none";
         chatContainer.style.display = "flex";
 
-        // personalized welcome based on the sign calculated by backend
         appendMessage(
           `Welcome, traveler. I see the radiant energy of a ${data.sun_sign} within you. What life events or cosmic energies would you like me to forecast for you today?`,
           "bot",
@@ -72,28 +73,26 @@ async function registerUser() {
       }, 500);
     } else {
       authMessage.style.color = "#ffb7b2";
-      authMessage.innerText =
-        data.error || "The stars are misaligned. Try again.";
+      authMessage.innerText = data.error || "The stars are misaligned. Try again.";
     }
   } catch (error) {
     console.error("Connection Error:", error);
     authMessage.style.color = "#ffb7b2";
-    authMessage.innerText =
-      "Could not reach the backend. Is your Python server running?";
+    authMessage.innerText = "Could not reach the celestial brain on Render.";
   }
 }
 
-// 4. Chat Logic (Connecting to Flask /chat)
+// 4. Chat Logic (Connecting to Render /chat)
 async function sendMessage() {
   let text = inputField.value.trim();
   if (text === "") return;
 
-  // Display user message
   appendMessage(text, "user");
   inputField.value = "";
 
   try {
-    const response = await fetch("http://127.0.0.1:5000/chat", {
+    // UPDATED: Now points to Render instead of 127.0.0.1
+    const response = await fetch(`${API_BASE_URL}/chat`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
@@ -115,7 +114,7 @@ async function sendMessage() {
   } catch (error) {
     console.error("Chat Connection Error:", error);
     appendMessage(
-      "My connection to the celestial ether is disrupted. Check your server.",
+      "My connection to the celestial ether is disrupted. Check your Render service.",
       "bot",
     );
   }
@@ -127,7 +126,5 @@ function appendMessage(text, sender) {
   msgDiv.className = `msg ${sender}`;
   msgDiv.innerText = text;
   chatBox.appendChild(msgDiv);
-
-  // Smooth scroll to the newest message
   chatBox.scrollTop = chatBox.scrollHeight;
 }
