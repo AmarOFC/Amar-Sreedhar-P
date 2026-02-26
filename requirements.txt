@@ -2,6 +2,6 @@ flask
 flask-cors
 pymongo
 bcrypt
-google-genai
+google-generativeai
 python-dotenv
 gunicorn
