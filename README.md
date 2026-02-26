@@ -5,3 +5,4 @@ knoYOsta is a full-stack AI-powered astrology web application built with Flask, 
 Author - Amar Sreedhar P
 
 <img src="https://res.cloudinary.com/daoiir1zy/image/upload/v1772135136/IMG_5892_e9ltqt.png">
+<img src="https://res.cloudinary.com/daoiir1zy/image/upload/v1772135124/IMG_5895_rymeti.png">
