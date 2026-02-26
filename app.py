@@ -3,7 +3,7 @@ from flask import Flask, request, jsonify
 from flask_cors import CORS
 from pymongo import MongoClient
 import bcrypt
-import google.generativeai as genai
+from groq import Groq  # 🟢 Swapped Gemini for Groq
 
 app = Flask(__name__)
 
@@ -12,13 +12,13 @@ CORS(app)
 
 # 2. GET CLOUD VARIABLES FROM RENDER
 MONGO_URI = os.environ.get("MONGO_URI")
-GEMINI_API_KEY = os.environ.get("GEMINI_API_KEY")
+GROQ_API_KEY = os.environ.get("GROQ_API_KEY") # 🟢 Look for the new Groq key
 
 # 3. CONNECT TO MONGODB ATLAS (Fixes the localhost 500 error)
 if MONGO_URI:
     try:
-        client = MongoClient(MONGO_URI)
-        db = client.get_database("knoyosta_db")
+        db_client = MongoClient(MONGO_URI) # Renamed to db_client for safety
+        db = db_client.get_database("knoyosta_db")
         users_collection = db.users
         print("Successfully connected to the Cosmic Database!")
     except Exception as e:
@@ -26,12 +26,12 @@ if MONGO_URI:
 else:
     print("WARNING: MONGO_URI is missing from Render Environment Variables!")
 
-# 4. SETUP GEMINI AI
-if GEMINI_API_KEY:
-    genai.configure(api_key=GEMINI_API_KEY)
-    model = genai.GenerativeModel('gemini-2.0-flash')
+# 4. SETUP GROQ AI
+if GROQ_API_KEY:
+    groq_client = Groq(api_key=GROQ_API_KEY)
+    MODEL = "llama-3.3-70b-versatile" # 🟢 Set the ultra-fast Groq model
 else:
-    print("WARNING: GEMINI_API_KEY is missing from Render Environment Variables!")
+    print("WARNING: GROQ_API_KEY is missing from Render Environment Variables!")
 
 # --- HELPER FUNCTION: Calculate Zodiac Sign ---
 def get_sun_sign(date_string):
@@ -86,7 +86,7 @@ def register():
         print(f"Registration Error: {e}")
         return jsonify({"error": "The stars are misaligned. Backend error."}), 500
 
-# --- ROUTE 2: CHAT WITH GEMINI ---
+# --- ROUTE 2: CHAT WITH GROQ ---
 @app.route('/chat', methods=['POST'])
 def chat():
     try:
@@ -95,12 +95,24 @@ def chat():
 
         if not user_message:
             return jsonify({"error": "Speak your mind, traveler."}), 400
+            
+        if not GROQ_API_KEY:
+            return jsonify({"error": "Cosmic connection lost (Missing API Key)."}), 500
 
-        # Connect to Gemini and get an answer
-        prompt = f"You are knoYOsta, a mystical cosmic oracle. A traveler asks you: '{user_message}'. Reply in a short, mystical, astrological tone."
-        response = model.generate_content(prompt)
+        # 🟢 Connect to Groq and get an answer using the new format
+        completion = groq_client.chat.completions.create(
+            model=MODEL,
+            messages=[
+                {"role": "system", "content": "You are knoYOsta, a mystical cosmic oracle. Reply to the traveler in a short, mystical, astrological tone."},
+                {"role": "user", "content": user_message}
+            ],
+            temperature=0.7 # Keeps the responses creative and mystical
+        )
+        
+        # Extract the exact text from Groq's response structure
+        bot_reply = completion.choices[0].message.content
 
-        return jsonify({"response": response.text}), 200
+        return jsonify({"response": bot_reply}), 200
 
     except Exception as e:
         print(f"Chat Error: {e}")
