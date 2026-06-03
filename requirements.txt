@@ -1,7 +1,0 @@
-flask
-flask-cors
-pymongo
-bcrypt
-groq
-python-dotenv
-gunicorn
