@@ -17,11 +17,10 @@ The table below tracks the development, implementation, and completion of the si
 | :--- | :--- | :--- | :--- | :--- |
 | **Project 01** | **Text-to-Image Generation Pipeline**<br>Constructed an end-to-end conditional GAN pipeline that tokenizes input phrases, generates custom structural embeddings, and synthesizes 28x28 matrix shape outputs. | PyTorch, NumPy, Matplotlib | 🟩 Completed | [View Code Workspace](./Project01_Text_to_Image_GAN/) |
 | **Project 02** | **Attentional Generative Systems**<br>Upgraded the framework using a custom cross-attention matrix mapping layer, aligning distinct word tokens with localized image pixel arrays. | PyTorch, NumPy, Matplotlib | 🟩 Completed | [View Code Workspace](./Project02_Attentional_GAN/) |
-| **Project 03** | *[Next Assignment Deliverable]* | TBD | 🟨 Pending | Locked |
-| **Project 04** | *[Next Assignment Deliverable]* | TBD | 🟨 Pending | Locked |
-| **Project 05** | *[Next Assignment Deliverable]* | TBD | 🟨 Pending | Locked |
-| **Project 06** | *[Next Assignment Deliverable]* | TBD | 🟨 Pending | Locked |
-
+| **Project 03** | **Parameter-Efficient Diffusion Adaptation**<br>Injected Low-Rank Adaptation (LoRA) decomposition matrices into the cross-attention layers of a foundational Stable Diffusion U-Net and CLIP text encoder to enable lightweight domain styling. | Diffusers, PyTorch, Transformers | 🟩 Completed | [View Code Workspace](./Project03_Stable_Diffusion_LoRA/) |
+| **Project 04** | **Oxford 102 Dataset Exploratory Diagnostics**<br>Conducted granular class frequency audits, multi-class distribution profiles, and resolution size matrix mapping to standardize input tensors for deep feature extractors. | NumPy, Matplotlib, OpenCV | 🟩 Completed | [View Code Workspace](./Project04_Oxford_102_Analysis/) |
+| **Project 05** | **Multi-Modal Vocabulary Tokenization Preprocessor**<br>Engineered an isolated sequence parsing processor that maps descriptive prompt sentences to index arrays, enforcing a strict 77-token sequence size constraint with automated padding configurations. | Python, Custom Tokenizer Engine | 🟩 Completed | [View Code Workspace](./Project05_Text_to_Image_Prepro/) |
+| **Project 06** | **Conditional GAN (CGAN) Geometric Synthesis Engine**<br>Developed a prompt-controlled generation framework leveraging continuous 10-dimensional class label embeddings (`nn.Embedding`) to guide min-max optimization paths toward specific geometric shapes. | PyTorch, OpenCV, NumPy | 🟩 Completed | [View Code Workspace](./Project06_Conditional_GAN/) |
 ---
 
 ## 🌐 Production Deployments & Full-Stack Applications
